@@ -1,0 +1,24 @@
+services:
+  app_mongodb:
+    build:
+      context: .
+      dockerfile_inline: |-
+        FROM ghcr.io/hasura/ndc-mongodb:v1.3.0
+        COPY ./ /etc/connector
+    develop:
+      watch:
+        - path: ./
+          action: sync+restart
+          target: /etc/connector
+    environment:
+      HASURA_SERVICE_TOKEN_SECRET: $APP_MONGODB_HASURA_SERVICE_TOKEN_SECRET
+      MONGODB_DATABASE_URI: $APP_MONGODB_MONGODB_DATABASE_URI
+      OTEL_EXPORTER_OTLP_ENDPOINT: $APP_MONGODB_OTEL_EXPORTER_OTLP_ENDPOINT
+      OTEL_SERVICE_NAME: $APP_MONGODB_OTEL_SERVICE_NAME
+    extra_hosts:
+      - local.hasura.dev=host-gateway
+    ports:
+      - mode: ingress
+        target: 8080
+        published: "8403"
+        protocol: tcp
