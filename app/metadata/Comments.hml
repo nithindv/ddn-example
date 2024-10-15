@@ -54,9 +54,7 @@ definition:
           - id
           - date
           - email
-          - movieId
-          - name
-          - text        
+          - movieId    
 ---
 kind: BooleanExpressionType
 version: v1
