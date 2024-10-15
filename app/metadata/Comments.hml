@@ -56,12 +56,7 @@ definition:
           - email
           - movieId
           - name
-          - text
-    - role: user
-      output:
-        allowedFields:
-          - name
-          - text          
+          - text        
 ---
 kind: BooleanExpressionType
 version: v1
