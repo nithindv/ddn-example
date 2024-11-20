@@ -1,0 +1,27 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: s2i-build
+  namespace: tskawinski-dev
+  spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      namespace: tskawinski-dev
+      name: 'ddn-examples:latest'
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: .s2i/Dockerfile
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/nithindv/ddn-examples.git'
+      ref: main
+  triggers:
+    - type: ConfigChange
+  runPolicy: Serial
